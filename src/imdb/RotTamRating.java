@@ -40,7 +40,7 @@ public class RotTamRating {
 		int userRating;
 		int criticsRating;
 		
-		
+		// second commit , updated movie list here
 		inputFile = new File("movies.txt");
 		ins = new insertR();
 		obj = new BufferedReader(new FileReader(inputFile));
