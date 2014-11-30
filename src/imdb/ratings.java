@@ -7,15 +7,23 @@ public class ratings {
 
 	private int UMovieRating ;
 	private int CMovieRating ;
+	public boolean isNull = false;
 	
 	public int getUserRating()
 	{
 		return UMovieRating;
 	}
+	
 	public int getCriticsRating()
 	{
 		return CMovieRating;
 	}
+	
+	public boolean getIsNull()
+	{
+		return isNull;
+	}
+	
 	public void setUserRating(int user) 
 	{
 		UMovieRating = user; 
@@ -26,7 +34,13 @@ public class ratings {
 		CMovieRating = Critics;
 	}
     
-	
+	public void setNull(boolean input)
+	{
+		isNull = input;
+	}
 }
+
+
+
 
 

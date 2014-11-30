@@ -27,7 +27,7 @@ public class insertR {
 
 		    Statement stmt = con.createStatement();
 
-		    stmt.execute("create table if not exists AllRating ( Movies varchar(50) , UserRating int, CriticsRating int )");
+		    stmt.execute("create table if not exists AllRating ( Movies varchar(100) , UserRating int, CriticsRating int )");
 		    stmt.executeUpdate("insert into AllRating values ('"+movieName+"', "+userRating+ ", "+criticsRating+" );");
 		    System.out.println("Table Updated with " +movieName);
 		    
