@@ -24,6 +24,7 @@ public class RotTamRating {
 	private static ratings rt;
 	public static List<ratings> lstRatings;
 	public static insertR ins;
+	public static int datesCount = 0;
 	
 	RotTamRating()
 	{
@@ -32,7 +33,7 @@ public class RotTamRating {
 		
 	}
 	
-	public static void main(String args[])  throws IOException
+	public static void main(String args[])  throws IOException, InterruptedException
 	{
 	
 		String value;
@@ -56,6 +57,7 @@ public class RotTamRating {
 		for(String MovName : movieList)
 		{
 			//String MoviName = "The Lord of the Rings: The Fellowship of the Ring";
+			Thread.sleep(500);
 			MovieName = MovName.replace(' ', '+');
 			System.out.println(MovieName);
 			//movielist 
@@ -66,9 +68,11 @@ public class RotTamRating {
 			
 			userRating = rt1.getUserRating();
 			criticsRating = rt1.getCriticsRating();
-	   
-			ins.sqlfunc(MovName, userRating, criticsRating);	
+            String date11 = rt1.getDate();
+		
+			ins.sqlfunc(MovName, userRating, criticsRating, date11);	
 		}
+		System.out.println("Total number of dates with null values is: "+datesCount);
 	}
 	
     public static ratings MName ( String MovieName ) throws IOException
@@ -77,19 +81,25 @@ public class RotTamRating {
     	 URL url = new URL("http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=gxufgzuy2keerwajtuvket5r&q="+MovieName+"&page_limit=1");
  	
  		try (InputStream is = url.openStream();
- 		       JsonReader rdr = Json.createReader(is)) {
+ 		      JsonReader rdr = Json.createReader(is)) {
  		 
  		      JsonObject obj = rdr.readObject();
  		 
  		      JsonArray results = obj.getJsonArray("movies");
  		
- 		      for (JsonObject result : results.getValuesAs(JsonObject.class)) {
- 		    	  JsonObject rate = result.getJsonObject("ratings");
+ 		   for (JsonObject result : results.getValuesAs(JsonObject.class)) {
+ 		    JsonObject rate = result.getJsonObject("ratings");
  		    	 rt.setUserRating(rate.getInt("audience_score"));
  		    	 System.out.println("Audience rating " +rate.getInt("audience_score"));
+ 		    	 rt.setCriticsRating(rate.getInt("critics_score"));
+ 		    	 System.out.println("Critics rating " +rate.getInt("critics_score"));
  		    	  
- 		        rt.setCriticsRating(rate.getInt("critics_score"));
-	    	    System.out.println("Critics rating " +rate.getInt("critics_score")+"Audience rating " +rate.getInt("audience_score")+"\n");                                    }
+ 		    JsonObject date1 = result.getJsonObject("release_dates");
+ 		    	 rt.setDate(date1.getString("theater"));
+ 		    	 
+ 		    	 System.out.println("Release Date is : " +date1.getString("theater"));
+	    	   // System.out.println("Critics rating " +rate.getInt("critics_score")+"Audience rating " +rate.getInt("audience_score")+"\n");                                    }
+ 		}
  		}
  		catch (Exception e)
  		{

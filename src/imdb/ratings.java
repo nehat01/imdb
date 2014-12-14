@@ -7,6 +7,7 @@ public class ratings {
 
 	private int UMovieRating ;
 	private int CMovieRating ;
+	private String RelDate;
 	public boolean isNull = false;
 	
 	public int getUserRating()
@@ -37,6 +38,15 @@ public class ratings {
 	public void setNull(boolean input)
 	{
 		isNull = input;
+	}
+	
+	public String getDate()
+	{
+		return RelDate;
+	}
+	public void setDate(String string) 
+	{
+		RelDate = string; 
 	}
 }
 
